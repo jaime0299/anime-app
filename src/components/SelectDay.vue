@@ -15,6 +15,9 @@
                 <v-text-field :loading="loadingSearch" density="compact" variant="solo" v-model="username" label="Username" append-inner-icon="mdi-magnify" single-line hide-details @click:append-inner="searchList"></v-text-field>
             </v-col>
             <v-col cols="12">
+                <v-checkbox v-model="showBehindOnly" label="Show Behind Only" class="text-field"></v-checkbox>
+            </v-col>
+            <v-col cols="12">
                 <v-select :items="days" item-title="name" item-value="id" label="Select Day" variant="solo"
                     class="text-field" v-model="selectedDay"></v-select>
             </v-col>
@@ -25,7 +28,7 @@
 <script setup>
 import { ref, watch } from 'vue';
 
-const emit = defineEmits(['update:selectedDay', 'update:username'])
+const emit = defineEmits(['update:selectedDay', 'update:username', 'update:showBehindOnly'])
 
 const date = new Date()
 const selectedDay = ref(date.getDay())
@@ -44,8 +47,14 @@ const days = ref([
 
 const username = ref('')
 
+const showBehindOnly = ref(false)
+
 watch(selectedDay, (newValue, oldValue) => {
     emit('update:selectedDay', newValue)
+})
+
+watch(showBehindOnly, (newValue, oldValue) => {
+    emit('update:showBehindOnly', newValue)
 })
 
 function searchList() {
