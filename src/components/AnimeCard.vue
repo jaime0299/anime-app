@@ -1,5 +1,6 @@
 <template>
-    <v-card class="mx-auto" max-width="250" width="210" :variant="variant">
+    <v-card class="mx-auto" max-width="250" width="210">
+    <!-- <v-card class="mx-auto" max-width="250" width="210" :variant="variant"> -->
         <v-card-item>
             <v-img :src="thumbnail" height="150px">
             </v-img>

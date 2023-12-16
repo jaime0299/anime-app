@@ -17,6 +17,7 @@
 <script setup>
 import AnimeCard from '@/components/AnimeCard.vue'
 import SelectDay from '@/components/SelectDay.vue'
+
 import { ref } from 'vue';
 
 let id = 0
@@ -66,8 +67,8 @@ function makeQuery(username) {
               }
           }
       `;
-
-    // Define our query variables and values that will be used in the query request
+    
+      // Define our query variables and values that will be used in the query request
     var variables = {
         username: username
     };
@@ -107,14 +108,15 @@ function handleData(data) {
         let status = anime.media.status
 
         if (status === 'RELEASING') {
+            
             let today = new Date().getDay()
             let startDate = anime.media.airingSchedule.nodes[0].timeUntilAiring * 1000
             startDate = startDate < 0 ? startDate * -1 : startDate
             let airingDay = new Date(Date.now() - startDate).getDay()
 
-            console.log(today)
-            console.log(startDate)
-            console.log(airingDay)
+            // console.log(today)
+            // console.log(startDate)
+            // console.log(airingDay)
 
             if (today === airingDay) {
                 handleFilterAnimeList(anime)
@@ -122,7 +124,7 @@ function handleData(data) {
         }
 
     })
-    console.log(tempAnimeList)
+    // console.log(tempAnimeList)
 }
 
 function handleFilterAnimeList(anime) {
