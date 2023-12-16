@@ -2,7 +2,7 @@
     <v-app>
         <v-main>
             <v-container>
-                <SelectDay @update:selectedDay="handleChangeDay" @update:username="makeQuery" />
+                <SelectDay @update:selectedDay="handleChangeDay" @update:username="handleChangeUsername" @update:showBehindOnly="handleChangeShowBehindOnly" />
                 <v-row>
                     <v-col v-for="anime in animeList" :key="anime.id">
                         <AnimeCard :title="anime.title" :thumbnail="anime.thumbnail" :progress="anime.progress"
@@ -23,8 +23,11 @@ let id = 0
 
 const animeList = ref([])
 const originalAnimeList = ref([])
+const username = ref('')
+const showBehindOnly = ref(false)
+const day = ref(0)
 
-function makeQuery(username) {
+function makeQuery() {
     var query = `
           query ($username: String) { 
               MediaListCollection (userName: $username, status: CURRENT, type: ANIME) { 
@@ -69,7 +72,7 @@ function makeQuery(username) {
 
     // Define our query variables and values that will be used in the query request
     var variables = {
-        username: username
+        username: username.value
     };
 
     // Define the config we'll need for our Api request
@@ -126,6 +129,17 @@ function handleData(data) {
 }
 
 function handleFilterAnimeList(anime) {
+
+    let progressInt = parseInt(anime.progress)
+    let lastAiredInt = anime.media.nextAiringEpisode != null ? anime.media.nextAiringEpisode.episode - 1 : 0
+
+    console.log(showBehindOnly.value);
+    console.log(progressInt);
+    console.log(lastAiredInt);
+    if(showBehindOnly.value && progressInt == lastAiredInt) {
+        return
+    }
+
     let progress = anime.media.episodes != null ? `Progress: ${anime.progress}/${anime.media.episodes}` : `${anime.progress}/?`
     let lastAired = anime.media.nextAiringEpisode != null ? anime.media.nextAiringEpisode.episode - 1 : 0
     lastAired = lastAired > 0 ? 'Last aired episode: ' + lastAired : 'Finished'
@@ -142,8 +156,9 @@ function handleFilterAnimeList(anime) {
     animeList.value.push(tempAnime)
 }
 
-function handleChangeDay(day) {
-    if (day === 7) {
+function handleChangeDay(dayTemp) {
+    day.value = dayTemp
+    if (dayTemp === 7) {
         animeList.value = []
         originalAnimeList.value.forEach((anime) => {
             let status = anime.media.status
@@ -152,7 +167,7 @@ function handleChangeDay(day) {
                 handleFilterAnimeList(anime)
             }
         })
-    } else if (day === 8) {
+    } else if (dayTemp === 8) {
         animeList.value = []
         originalAnimeList.value.forEach((anime) => {
             handleFilterAnimeList(anime)
@@ -167,13 +182,23 @@ function handleChangeDay(day) {
                 startDate = startDate < 0 ? startDate * -1 : startDate
                 let airingDay = new Date(Date.now() - startDate).getDay()
 
-                if (day === airingDay) {
+                if (dayTemp === airingDay) {
                     handleFilterAnimeList(anime)
                 }
             }
 
         })
     }
+}
+
+function handleChangeUsername(usernameTemp) {
+    username.value = usernameTemp
+    makeQuery()
+}
+
+function handleChangeShowBehindOnly(showBehindOnlyTemp) {
+    showBehindOnly.value = showBehindOnlyTemp
+    handleChangeDay(day.value)
 }
 
 function handleError(error) {
