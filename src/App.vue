@@ -159,10 +159,8 @@ function handleData(data) {
             startDate = startDate < 0 ? startDate * -1 : startDate
             let airingDay = new Date(Date.now() - startDate).getDay()
 
-            // console.log(today)
-            // console.log(startDate)
-            // console.log(airingDay)
 
+            day.value = today;
             if (today === airingDay) {
                 handleFilterAnimeList(anime)
             }
