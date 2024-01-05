@@ -1,8 +1,9 @@
-<template>
+<!-- <template>
     <v-app>
         <v-main>
             <v-container>
-                <SelectDay @update:selectedDay="handleChangeDay" @update:username="handleChangeUsername" @update:showBehindOnly="handleChangeShowBehindOnly" />
+                <SelectDay @update:selectedDay="handleChangeDay" @update:username="handleChangeUsername"
+                    @update:showBehindOnly="handleChangeShowBehindOnly" />
                 <v-row>
                     <v-col v-for="anime in animeList" :key="anime.id">
                         <AnimeCard :title="anime.title" :thumbnail="anime.thumbnail" :progress="anime.progress"
@@ -12,9 +13,47 @@
             </v-container>
         </v-main>
     </v-app>
+</template> -->
+
+<template>
+    <v-app>
+        <v-main>
+            <v-navigation-drawer v-model="drawer" :rail="rail" permanent @click="rail = false">
+                <v-list-item prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg" title="John Leider" nav>
+                    <template v-slot:append>
+                        <v-btn variant="text" icon="mdi-chevron-left" @click.stop="rail = !rail"></v-btn>
+                    </template>
+                </v-list-item>
+
+                <v-divider></v-divider>
+
+                <v-list density="compact" nav>
+                    <v-list-item prepend-icon="mdi-home-city" title="Home" value="home"></v-list-item>
+                    <v-list-item prepend-icon="mdi-account" title="My Account" value="account"></v-list-item>
+                    <v-list-item prepend-icon="mdi-account-group-outline" title="Users" value="users"></v-list-item>
+                </v-list>
+            </v-navigation-drawer>
+            <!-- <v-main> -->
+                <div class="d-flex justify-center align-center h-100">
+                    <v-container class="mb-6">
+                        <SelectDay @update:selectedDay="handleChangeDay" @update:username="handleChangeUsername"
+                            @update:showBehindOnly="handleChangeShowBehindOnly" />
+                        <v-row>
+                            <v-col v-for="anime in animeList" :key="anime.id">
+                                <AnimeCard :title="anime.title" :thumbnail="anime.thumbnail" :progress="anime.progress"
+                                    :lastAired="anime.lastAired" :url="anime.url" />
+                            </v-col>
+                        </v-row>
+                    </v-container>
+                </div>
+            <!-- </v-main> -->
+        </v-main>
+    </v-app>
 </template>
 
 <script setup>
+
+// import AnimeSideBar from '@/components/AnimeSideBar.vue'
 import AnimeCard from '@/components/AnimeCard.vue'
 import SelectDay from '@/components/SelectDay.vue'
 
@@ -27,6 +66,9 @@ const originalAnimeList = ref([])
 const username = ref('')
 const showBehindOnly = ref(false)
 const day = ref(0)
+
+const drawer = ref(true);
+const rail = ref(true);
 
 function makeQuery() {
     var query = `
@@ -70,8 +112,8 @@ function makeQuery() {
               }
           }
       `;
-    
-      // Define our query variables and values that will be used in the query request
+
+    // Define our query variables and values that will be used in the query request
     var variables = {
         username: username.value
     };
@@ -111,7 +153,7 @@ function handleData(data) {
         let status = anime.media.status
 
         if (status === 'RELEASING') {
-            
+
             let today = new Date().getDay()
             let startDate = anime.media.airingSchedule.nodes[0].timeUntilAiring * 1000
             startDate = startDate < 0 ? startDate * -1 : startDate
@@ -135,10 +177,10 @@ function handleFilterAnimeList(anime) {
     let progressInt = parseInt(anime.progress)
     let lastAiredInt = anime.media.nextAiringEpisode != null ? anime.media.nextAiringEpisode.episode - 1 : 0
 
-    console.log(showBehindOnly.value);
-    console.log(progressInt);
-    console.log(lastAiredInt);
-    if(showBehindOnly.value && progressInt == lastAiredInt) {
+    // console.log(showBehindOnly.value);
+    // console.log(progressInt);
+    // console.log(lastAiredInt);
+    if (showBehindOnly.value && progressInt == lastAiredInt) {
         return
     }
 

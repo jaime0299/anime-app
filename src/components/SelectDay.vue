@@ -2,21 +2,23 @@
     <!-- Input to write the username with a button to search the list for that user -->
     <v-container>
         <v-row>
-            <!-- <v-col cols="12" md="6">
-                <v-responsive class="mx-auto">
-                    <v-text-field v-model="username" label="Username" clearable hide-details="auto" outlined class="text-field" hint="Enter your username to find this your animes."></v-text-field>
-                </v-responsive>
-            </v-col>
-            <v-col cols="12" md="6">
-                <v-btn @click="searchList" color="primary" class="text-field">Search</v-btn>
-            </v-col> -->
             <v-spacer></v-spacer>
-            <v-col cols="12" md="4">
-                <v-text-field :loading="loadingSearch" density="compact" variant="solo" v-model="username" label="Username" append-inner-icon="mdi-magnify" single-line hide-details @click:append-inner="searchList"></v-text-field>
+            <v-col cols="6" md="4">
+                <v-text-field :loading="loadingSearch" density="compact" variant="solo" v-model="username" label="Username"
+                    append-inner-icon="mdi-magnify" single-line hide-details @click:append-inner="searchList"
+                    @keydown.enter.prevent="searchList" required here placeholder="Username"
+                    class="text-field"></v-text-field>
             </v-col>
-            <v-col cols="12">
-                <v-checkbox v-model="showBehindOnly" label="Show Behind Only" class="text-field"></v-checkbox>
+            <v-col cols="6" md="3">
+                <v-switch color="orange" label="Show Behind Only" v-model="showBehindOnly"></v-switch>
             </v-col>
+            
+        
+        </v-row>
+        <v-row>
+            <!-- <v-col cols="6" md="4">
+                <v-checkbox v-model="showBehindOnly" color="orange" label="Show Behind Only" class="text-field"></v-checkbox>
+            </v-col> -->
             <v-col cols="12">
                 <v-select :items="days" item-title="name" item-value="id" label="Select Day" variant="solo"
                     class="text-field" v-model="selectedDay"></v-select>
@@ -59,11 +61,11 @@ watch(showBehindOnly, (newValue, oldValue) => {
 
 function searchList() {
     loadingSearch.value = true;
-    setTimeout(() => {        
+    setTimeout(() => {
         loadingSearch.value = false;
         const date = new Date()
         selectedDay.value = date.getDay()
         emit('update:username', username.value)
-    }, 2000)    
+    }, 2000)
 }
 </script>
