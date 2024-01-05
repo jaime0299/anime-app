@@ -2,15 +2,23 @@
     <!-- Input to write the username with a button to search the list for that user -->
     <v-container>
         <v-row>
-            <v-col cols="12" md="6">
-                <v-text-field v-model="username" label="Username" outlined class="text-field"></v-text-field>
+            <v-spacer></v-spacer>
+            <v-col cols="6" md="4">
+                <v-text-field :loading="loadingSearch" density="compact" variant="solo" v-model="username" label="Username"
+                    append-inner-icon="mdi-magnify" single-line hide-details @click:append-inner="searchList"
+                    @keydown.enter.prevent="searchList" required here placeholder="Username"
+                    class="text-field"></v-text-field>
             </v-col>
-            <v-col cols="12" md="6">
-                <v-btn @click="searchList" color="primary" class="text-field">Search</v-btn>
+            <v-col cols="6" md="3">
+                <v-switch color="orange" label="Show Behind Only" v-model="showBehindOnly"></v-switch>
             </v-col>
-            <v-col cols="12">
-                <v-checkbox v-model="showBehindOnly" label="Show Behind Only" class="text-field"></v-checkbox>
-            </v-col>
+            
+        
+        </v-row>
+        <v-row>
+            <!-- <v-col cols="6" md="4">
+                <v-checkbox v-model="showBehindOnly" color="orange" label="Show Behind Only" class="text-field"></v-checkbox>
+            </v-col> -->
             <v-col cols="12">
                 <v-select :items="days" item-title="name" item-value="id" label="Select Day" variant="solo"
                     class="text-field" v-model="selectedDay"></v-select>
@@ -26,6 +34,7 @@ const emit = defineEmits(['update:selectedDay', 'update:username', 'update:showB
 
 const date = new Date()
 const selectedDay = ref(date.getDay())
+const loadingSearch = ref(false);
 const days = ref([
     { id: 0, name: 'Sunday' },
     { id: 1, name: 'Monday' },
@@ -51,8 +60,12 @@ watch(showBehindOnly, (newValue, oldValue) => {
 })
 
 function searchList() {
-    const date = new Date()
-    selectedDay.value = date.getDay()
-    emit('update:username', username.value)
+    loadingSearch.value = true;
+    setTimeout(() => {
+        loadingSearch.value = false;
+        const date = new Date()
+        selectedDay.value = date.getDay()
+        emit('update:username', username.value)
+    }, 2000)
 }
 </script>
