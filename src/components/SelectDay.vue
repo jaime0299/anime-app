@@ -10,24 +10,29 @@
                     class="text-field"></v-text-field>
             </v-col>
             <v-col cols="6" md="3">
-                <v-switch color="orange" label="Show Behind Only" v-model="showBehindOnly"></v-switch>
+                <v-switch color="blue" label="Show Behind Only" v-model="showBehindOnly"></v-switch>
             </v-col>
-            
-        
+
+
         </v-row>
         <v-row>
-            <!-- <v-col cols="6" md="4">
-                <v-checkbox v-model="showBehindOnly" color="orange" label="Show Behind Only" class="text-field"></v-checkbox>
-            </v-col> -->
             <v-col cols="12">
-                <v-select :items="days" item-title="name" item-value="id" label="Select Day" variant="solo"
-                    class="text-field" v-model="selectedDay"></v-select>
+                <!-- <v-select :items="days" item-title="name" item-value="id" label="Select Day" variant="solo"
+                    class="text-field" v-model="selectedDay"></v-select> -->
+                <v-card>
+                    <v-tabs v-model="selectedDay" bg-color="deep-purple-darken-4" center-active>
+                        <v-tab v-for="day in days" :key="day" :value="day.id">
+                            {{ day.name }}
+                        </v-tab>
+                    </v-tabs>
+                </v-card>
             </v-col>
         </v-row>
     </v-container>
 </template>
 
 <script setup>
+
 import { ref, watch } from 'vue';
 
 const emit = defineEmits(['update:selectedDay', 'update:username', 'update:showBehindOnly'])
@@ -47,11 +52,13 @@ const days = ref([
     { id: 8, name: 'All' }
 ])
 
-const username = ref('')
+// const username = ref('')
+const username = ref('Jaime0299')
 
 const showBehindOnly = ref(false)
 
 watch(selectedDay, (newValue, oldValue) => {
+    console.log(newValue);
     emit('update:selectedDay', newValue)
 })
 
