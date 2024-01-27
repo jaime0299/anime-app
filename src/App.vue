@@ -17,19 +17,20 @@
         </v-list>
       </v-navigation-drawer>
       <!-- <div class="d-flex justify-center align-center h-100"> -->
-        <div>
-          <v-container class="mb-6">
-            <SelectDay @update:selectedDay="handleChangeDay" @update:username="handleChangeUsername"
-              @update:showBehindOnly="handleChangeShowBehindOnly" />
-            <v-row>
-              <v-col v-for="anime in animeList" :key="anime.id">
-                <AnimeCard :title="anime.title" :thumbnail="anime.thumbnail" :progress="anime.progress"
-                  :lastAired="anime.lastAired" :url="anime.url" />
-              </v-col>
-            </v-row>
-            <!-- <AnimeToolbar/> -->
-          </v-container>
-        </div>
+      <div class="text-center">
+        <v-container class="mb-6">
+          <SelectDay @update:selectedDay="handleChangeDay" @update:username="handleChangeUsername"
+            @update:showBehindOnly="handleChangeShowBehindOnly" />
+          <v-row class="myRowCustom">
+            <div class="card-container">              
+            <v-col v-for="anime in animeList" :key="anime.id">
+              <AnimeCard :title="anime.title" :thumbnail="anime.thumbnail" :progress="anime.progress"
+                :lastAired="anime.lastAired" :url="anime.url" />
+            </v-col>
+            </div>
+          </v-row>
+        </v-container>
+      </div>
     </v-main>
   </v-app>
 </template>
@@ -237,3 +238,19 @@ function handleError(error) {
   console.log(error);
 }
 </script>
+
+<style scoped>
+.card-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 15px; /* Establecer el espacio entre las tarjetas */
+    padding: 20px;
+}
+.myRowCustom {
+  display: flex;
+  justify-content: center; /* Centra el contenido horizontalmente */
+  align-items: center; /* Centra el contenido verticalmente */
+}
+</style>

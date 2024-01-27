@@ -1,26 +1,4 @@
 <template>
-    <!-- <v-card class="mx-auto" max-width="250" width="210">
-        <v-card class="mx-auto" max-width="250" width="210" :variant="variant"> 
-        <v-card-item>
-            <v-img :src="thumbnail" height="150px"></v-img>
-            <v-card-title @mouseover="isHovering = true" @mouseout="isHovering = false"
-                :class="`${isHovering ? 'text-wrap' : ''}`">{{ title }}</v-card-title>
-            <v-card-subtitle class="text-wrap">{{ progress }}</v-card-subtitle>
-            <v-card-subtitle class="text-wrap">{{ lastAired }}</v-card-subtitle>
-        </v-card-item>
-
-        <v-card-actions class="anime-card">
-            <v-spacer></v-spacer>
-            <v-btn size="small" class="custom-icon-button button-mark-anime" variant="outlined">
-                <v-icon class="custom-icon" icon="mdi-checkbox-marked-circle"></v-icon>
-            </v-btn>
-            <v-btn size="small" class="custom-icon-button button-play-anime" variant="outlined">
-                <v-icon class="custom-icon" icon="mdi mdi-play-circle"></v-icon>
-            </v-btn>
-            <v-btn size="x-large" color="success" variant="outlined" icon="mdi mdi-check-circle" @click="animeCradMark"></v-btn>
-            <v-btn size="x-large" color="info" variant="text" icon="mdi-share-variant" :href="url"></v-btn> 
-        </v-card-actions>
-    </v-card> -->
     <v-card class="card-anime">
         <v-card-item class="card-anime-content">
             <v-img :src="thumbnail" max-width="200" height="200"></v-img>
@@ -30,12 +8,18 @@
         </v-card-item>
         <v-card-actions class="card-anime-buttons">
             <v-btn size="small" class="card-anime-button button-mark" variant="outlined">
-            <!-- <v-btn size="small" class="card-anime-button button-mark" variant="outlined" @click="animeCradMark"> -->
+                <!-- <v-btn size="small" class="card-anime-button button-mark" variant="outlined" @click="animeCradMark"> -->
+                <v-tooltip activator="parent" location="bottom">MARK</v-tooltip>
                 <v-icon class="card-anime-button-icon" icon="mdi-checkbox-marked-circle"></v-icon>
             </v-btn>
+            <v-btn size="small" class="card-anime-button button-donwload" variant="outlined">
+                <v-icon class="card-anime-button-icon" icon="mdi mdi-download-circle"></v-icon>
+                <v-tooltip activator="parent" location="bottom">DOWNLOAD</v-tooltip>
+            </v-btn>
             <v-btn size="small" class="card-anime-button button-play" variant="outlined">
-            <!-- <v-btn size="small" class="card-anime-button button-play" variant="outlined" :href="url"> -->
+                <!-- <v-btn size="small" class="card-anime-button button-play" variant="outlined" :href="url"> -->
                 <v-icon class="card-anime-button-icon" icon="mdi mdi-play-circle"></v-icon>
+                <v-tooltip activator="parent" location="bottom">WATCH</v-tooltip>
             </v-btn>
         </v-card-actions>
     </v-card>
@@ -114,7 +98,17 @@ function animeCradMark(title) {
 
 .button-mark:hover {
     background-color: #ffffff;
-    color: #00ff6a;
+    color: #16d646;
+}
+
+.button-donwload {
+    background-color: #ff9100;
+    color: #ffffff;
+}
+
+.button-donwload:hover {
+    background-color: #ffffff;
+    color: #ff9100;
 }
 
 .button-play {

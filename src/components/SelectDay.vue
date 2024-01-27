@@ -12,15 +12,13 @@
             <v-col cols="6" md="3">
                 <v-switch color="blue" label="Show Behind Only" v-model="showBehindOnly"></v-switch>
             </v-col>
-
-
         </v-row>
         <v-row>
             <v-col cols="12">
-                <!-- <v-select :items="days" item-title="name" item-value="id" label="Select Day" variant="solo"
-                    class="text-field" v-model="selectedDay"></v-select> -->
                 <v-card>
-                    <v-tabs v-model="selectedDay" bg-color="deep-purple-darken-4" center-active>
+                    <v-tabs v-model="selectedDay" bg-color="deep-purple-darken-4" center-active
+                        next-icon="mdi-arrow-right-bold-box-outline" prev-icon="mdi-arrow-left-bold-box-outline"
+                        show-arrows align-tabs="center">
                         <v-tab v-for="day in days" :key="day" :value="day.id">
                             {{ day.name }}
                         </v-tab>
@@ -52,8 +50,8 @@ const days = ref([
     { id: 8, name: 'All' }
 ])
 
-// const username = ref('')
-const username = ref('Jaime0299')
+const username = ref('')
+// const username = ref('Jaime0299')
 
 const showBehindOnly = ref(false)
 
