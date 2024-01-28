@@ -1,21 +1,26 @@
 <template>
-    <v-card class="mx-auto" max-width="250" width="210">
-    <!-- <v-card class="mx-auto" max-width="250" width="210" :variant="variant"> -->
-        <v-card-item>
-            <v-img :src="thumbnail" height="150px">
-            </v-img>
-            <v-card-title @mouseover="isHovering = true" @mouseout="isHovering = false" :class="`${isHovering? 'text-wrap': ''}`">{{ title }}</v-card-title>
-            <v-card-subtitle class="text-wrap">{{ progress }}</v-card-subtitle>
-            <v-card-subtitle class="text-wrap">{{ lastAired }}</v-card-subtitle>
+    <v-card class="card-anime">
+        <v-card-item class="card-anime-content">
+            <v-img :src="thumbnail" max-width="200" height="200"></v-img>
+            <v-card-title class="card-anime-title">{{ title }}</v-card-title>
+            <v-card-subtitle class="card-anime-data">{{ progress }}</v-card-subtitle>
+            <v-card-subtitle class="card-anime-data">{{ lastAired }}</v-card-subtitle>
         </v-card-item>
-
-        <v-card-actions>
-            <!-- <v-btn :href="url" target="_blank" text>Watch</v-btn>
-            <v-btn text>Mark</v-btn> -->
-            <v-spacer></v-spacer>
-            <v-btn size="small" color="success" variant="outlined" icon="mdi-check-circle" @click="animeCradMark"></v-btn>
-            <!-- <v-btn size="small" color="info" variant="outlined" icon="mdi-share-variant"></v-btn> -->
-            <v-btn size="medium" color="info" variant="text" icon="mdi-share-variant" :href="url"></v-btn>
+        <v-card-actions class="card-anime-buttons">
+            <v-btn size="small" class="card-anime-button button-mark" variant="outlined">
+                <!-- <v-btn size="small" class="card-anime-button button-mark" variant="outlined" @click="animeCradMark"> -->
+                <v-tooltip activator="parent" location="bottom">MARK</v-tooltip>
+                <v-icon class="card-anime-button-icon" icon="mdi-checkbox-marked-circle"></v-icon>
+            </v-btn>
+            <v-btn size="small" class="card-anime-button button-donwload" variant="outlined">
+                <v-icon class="card-anime-button-icon" icon="mdi mdi-download-circle"></v-icon>
+                <v-tooltip activator="parent" location="bottom">DOWNLOAD</v-tooltip>
+            </v-btn>
+            <v-btn size="small" class="card-anime-button button-play" variant="outlined">
+                <!-- <v-btn size="small" class="card-anime-button button-play" variant="outlined" :href="url"> -->
+                <v-icon class="card-anime-button-icon" icon="mdi mdi-play-circle"></v-icon>
+                <v-tooltip activator="parent" location="bottom">WATCH</v-tooltip>
+            </v-btn>
         </v-card-actions>
     </v-card>
 </template>
@@ -31,7 +36,7 @@ const props = defineProps({
     url: String
 })
 
-const isHovering = ref(false)
+// const isHovering = ref(false)
 
 function animeCradMark(title) {
     console.log(title);
@@ -40,8 +45,83 @@ function animeCradMark(title) {
 </script>
 
 <style scoped>
-.anime-card {
-    margin-bottom: 20px !important;
+.card-anime {
+    width: 210px;
+    /* height: 450px; */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* .card-anime img {
+    width: 100%;
+    height: auto;
+} */
+
+.card-anime-content {
+    padding: 20px;
+}
+
+.card-anime-title {
+    font-size: 1.0rem;
+    margin-bottom: 10px;
+}
+
+.card-anime-data {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.card-anime-buttons {
+    display: flex;
+    justify-content: space-between;
+    /* margin-top: 15px; */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.card-anime-button {
+    flex: 1;
+    margin-right: 5px;
+}
+
+.card-anime-button:last-child {
+    margin-right: 0;
+}
+
+.button-mark {
+    background-color: #16d646;
+    color: #ffffff;
+}
+
+.button-mark:hover {
+    background-color: #ffffff;
+    color: #16d646;
+}
+
+.button-donwload {
+    background-color: #ff9100;
+    color: #ffffff;
+}
+
+.button-donwload:hover {
+    background-color: #ffffff;
+    color: #ff9100;
+}
+
+.button-play {
+    background-color: #1689d6;
+    color: #ffffff;
+}
+
+.button-play:hover {
+    background-color: #ffffff;
+    color: #1689d6;
+}
+
+.card-anime-button-icon {
+    font-size: 24px;
+}
 </style>
