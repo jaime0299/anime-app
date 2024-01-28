@@ -12,11 +12,11 @@
                 <v-tooltip activator="parent" location="bottom">MARK</v-tooltip>
                 <v-icon class="card-anime-button-icon" icon="mdi-checkbox-marked-circle"></v-icon>
             </v-btn>
-            <v-btn size="small" class="card-anime-button button-donwload" variant="outlined">
+            <v-btn size="small" class="card-anime-button button-donwload" variant="outlined" :href="download" target="_blank">
                 <v-icon class="card-anime-button-icon" icon="mdi mdi-download-circle"></v-icon>
                 <v-tooltip activator="parent" location="bottom">DOWNLOAD</v-tooltip>
             </v-btn>
-            <v-btn size="small" class="card-anime-button button-play" variant="outlined">
+            <v-btn size="small" class="card-anime-button button-play" variant="outlined" :href="url" target="_blank">
                 <!-- <v-btn size="small" class="card-anime-button button-play" variant="outlined" :href="url"> -->
                 <v-icon class="card-anime-button-icon" icon="mdi mdi-play-circle"></v-icon>
                 <v-tooltip activator="parent" location="bottom">WATCH</v-tooltip>
@@ -35,6 +35,11 @@ const props = defineProps({
     lastAired: String,
     url: String
 })
+
+const download = ref('');
+let tempTitle = props.title.replace(/ /g, '+');
+let downloadLink = 'https://nyaa.si/?f=0&c=0_0&q='+tempTitle;
+download.value = downloadLink;
 
 // const isHovering = ref(false)
 
