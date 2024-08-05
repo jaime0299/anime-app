@@ -1,66 +1,105 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Card con Imagen, Título, Datos y Botones</title>
-  <style>
-    .card {
-      width: 300px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Menú con Avatar</title>
+    <style>
+      /*body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }*/
+    
+    .menu {
+        display: flex;
+        align-items: center;
+        background-color: #333;
+        padding: 10px;
+        color: #fff;
     }
-
-    .card img {
-      width: 100%;
-      height: auto;
+    
+    .avatar-container {
+        width: 40px;
+        height: 40px;
+        overflow: hidden;
+        border-radius: 50%;
+        margin-right: 10px;
     }
-
-    .card-content {
-      padding: 20px;
+    
+    .avatar-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
     }
-
-    .card-title {
-      font-size: 1.5rem;
-      margin-bottom: 10px;
+    
+    ul {
+        list-style: none;
+        display: flex;
+        margin: 0;
+        padding: 0;
     }
-
-    .card-data {
-      font-size: 1rem;
-      color: #555;
-      margin-bottom: 5px;
+    
+    li {
+        margin-right: 20px;
     }
-
-    .card-buttons {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 15px;
+    
+    a {
+        text-decoration: none;
+        color: #fff;
     }
-
-    .card-button {
-      flex: 1;
-      margin-right: 5px;
-    }
-
-    .card-button:last-child {
-      margin-right: 0;
-    }
-  </style>
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: radial-gradient(circle at center, #ffcc29, #e81a4e 50%, #00bcd4);
+        background-size: 200% 200%;
+        animation: backgroundAnimation 10s linear infinite;
+        color: #fff;
+        font-size: 2em;
+        overflow: hidden;
+      }
+      
+      @keyframes backgroundAnimation {
+        0% {
+          background-position: 0% 0%;
+        }
+        100% {
+          background-position: 100% 100%;
+        }
+      }
+      
+      body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAIklEQVR42mP8/wcAAwAB/+/8SXAAAAABJRU5ErkJggg==');
+        opacity: 0.2;
+      }
+      
+      
+    
+    </style>
 </head>
-<body>
-  <div class="card">
-    <img src="tu-imagen.jpg" alt="Descripción de la imagen">
-    <div class="card-content">
-      <h2 class="card-title">Título de la Tarjeta</h2>
-      <p class="card-data">Dato 1: Valor 1</p>
-      <p class="card-data">Dato 2: Valor 2</p>
-      <div class="card-buttons">
-        <button class="card-button">Botón 1</button>
-        <button class="card-button">Botón 2</button>
-      </div>
-    </div>
-  </div>
+<body class="parallax">
+    <nav class="menu">
+        <div class="avatar-container">
+            <img src="tu-avatar.png" alt="Avatar">
+        </div>
+        <ul>
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Perfil</a></li>
+            <li><a href="#">Configuración</a></li>
+            <li><a href="#">Cerrar sesión</a></li>
+        </ul>
+    </nav>
 </body>
 </html>
+

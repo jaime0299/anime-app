@@ -1,27 +1,30 @@
 <template>
-    <v-card class="card-anime">
-        <v-card-item class="card-anime-content">
-            <v-img :src="thumbnail" max-width="200" height="200"></v-img>
-            <v-card-title class="card-anime-title">{{ title }}</v-card-title>
-            <v-card-subtitle class="card-anime-data">{{ progress }}</v-card-subtitle>
-            <v-card-subtitle class="card-anime-data">{{ lastAired }}</v-card-subtitle>
-        </v-card-item>
-        <v-card-actions class="card-anime-buttons">
-            <v-btn size="small" class="card-anime-button button-mark" variant="outlined">
-                <!-- <v-btn size="small" class="card-anime-button button-mark" variant="outlined" @click="animeCradMark"> -->
-                <v-tooltip activator="parent" location="bottom">MARK</v-tooltip>
-                <v-icon class="card-anime-button-icon" icon="mdi-checkbox-marked-circle"></v-icon>
-            </v-btn>
-            <v-btn size="small" class="card-anime-button button-donwload" variant="outlined" :href="download" target="_blank">
-                <v-icon class="card-anime-button-icon" icon="mdi mdi-download-circle"></v-icon>
-                <v-tooltip activator="parent" location="bottom">DOWNLOAD</v-tooltip>
-            </v-btn>
-            <v-btn size="small" class="card-anime-button button-play" variant="outlined" :href="url" target="_blank">
-                <!-- <v-btn size="small" class="card-anime-button button-play" variant="outlined" :href="url"> -->
-                <v-icon class="card-anime-button-icon" icon="mdi mdi-play-circle"></v-icon>
-                <v-tooltip activator="parent" location="bottom">WATCH</v-tooltip>
-            </v-btn>
-        </v-card-actions>
+    <v-card class="card-v-anime">
+        <v-card class="card-anime">
+            <v-card-item class="card-anime-content">
+                <v-img :src="thumbnail" max-width="200" height="200"></v-img>
+                <v-card-title class="card-anime-title">{{ title }}</v-card-title>
+                <v-card-subtitle class="card-anime-data">{{ progress }}</v-card-subtitle>
+                <v-card-subtitle class="card-anime-data">{{ lastAired }}</v-card-subtitle>
+            </v-card-item>
+            <v-card-actions class="card-anime-buttons">
+                <v-btn size="small" class="card-anime-button button-mark" variant="outlined">
+                    <!-- <v-btn size="small" class="card-anime-button button-mark" variant="outlined" @click="animeCradMark"> -->
+                    <v-tooltip activator="parent" location="bottom">MARK</v-tooltip>
+                    <v-icon class="card-anime-button-icon" icon="mdi-checkbox-marked-circle"></v-icon>
+                </v-btn>
+                <v-btn size="small" class="card-anime-button button-play" variant="outlined" target="_blank">
+                    <!-- <v-btn size="small" class="card-anime-button button-play" variant="outlined" :href="url" target="_blank"> -->
+                    <v-icon class="card-anime-button-icon" icon="mdi mdi-play-circle"></v-icon>
+                    <v-tooltip activator="parent" location="bottom">WATCH</v-tooltip>
+                </v-btn>
+                <v-btn size="small" class="card-anime-button button-donwload" variant="outlined" :href="download"
+                    target="_blank">
+                    <v-icon class="card-anime-button-icon" icon="mdi mdi-download-circle"></v-icon>
+                    <v-tooltip activator="parent" location="bottom">DOWNLOAD</v-tooltip>
+                </v-btn>
+            </v-card-actions>
+        </v-card>
     </v-card>
 </template>
 
@@ -38,7 +41,7 @@ const props = defineProps({
 
 const download = ref('');
 let tempTitle = props.title.replace(/ /g, '+');
-let downloadLink = 'https://nyaa.si/?f=0&c=0_0&q='+tempTitle;
+let downloadLink = 'https://nyaa.si/?f=0&c=0_0&q=' + tempTitle;
 download.value = downloadLink;
 
 // const isHovering = ref(false)
@@ -50,19 +53,26 @@ function animeCradMark(title) {
 </script>
 
 <style scoped>
-.card-anime {
+.card-v-anime {
     width: 210px;
-    /* height: 450px; */
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* background-image: linear-gradient(163deg, #00ff75 0%, #3700ff 100%); */
+    background-image: linear-gradient(163deg, #ffae00 0%, #fbff00 100%);
+    border-radius: 20px;
+    transition: all .3s;
 }
 
-/* .card-anime img {
-    width: 100%;
-    height: auto;
-} */
+.card-anime {
+    background-color: #b7b7c7;
+    width: 210px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all .2s;
+}
+
+.card-anime:hover {
+    transform: scale(0.98);
+    border-radius: 20px;
+}
 
 .card-anime-content {
     padding: 20px;

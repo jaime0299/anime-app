@@ -1,42 +1,36 @@
 <template>
   <v-app>
     <v-main>
-      <v-navigation-drawer v-model="drawer" :rail="rail" permanent @click="rail = false">
-        <v-list-item prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg" title="John Leider" nav>
-          <template v-slot:append>
-            <v-btn variant="text" icon="mdi-chevron-left" @click.stop="rail = !rail"></v-btn>
-          </template>
-        </v-list-item>
+      <v-navigation-drawer expand-on-hover rail>
+        <v-list>
+          <v-list-item prepend-avatar="./assets/Logo_Official_AA.png"
+            :title="username == '' ? 'ANIME APP' : username.toUpperCase()"></v-list-item>
+        </v-list>
 
         <v-divider></v-divider>
 
         <v-list density="compact" nav>
-          <v-list-item prepend-icon="mdi-home-city" title="Home" value="home"></v-list-item>
-          <v-list-item prepend-icon="mdi-account" title="My Account" value="account"></v-list-item>
-          <v-list-item prepend-icon="mdi-account-group-outline" title="Users" value="users"></v-list-item>
+          <v-list-item prepend-icon="mdi-home-city" title="HOME" value="home"></v-list-item>
+          <v-list-item prepend-icon="mdi-account-group-outline" title="USERS" value="users"></v-list-item>
+          <v-list-item prepend-icon="mdi-account" title="MY ACCOUNT" value="account"></v-list-item>
         </v-list>
       </v-navigation-drawer>
-      <!-- <div class="d-flex justify-center align-center h-100"> -->
-      <div class="text-center">
-        <v-container class="mb-6">
-          <SelectDay @update:selectedDay="handleChangeDay" @update:username="handleChangeUsername"
-            @update:showBehindOnly="handleChangeShowBehindOnly" />
-          <v-row class="myRowCustom">
-            <div class="card-container">              
-            <v-col v-for="anime in animeList" :key="anime.id">
-              <AnimeCard :title="anime.title" :thumbnail="anime.thumbnail" :progress="anime.progress"
-                :lastAired="anime.lastAired" :url="anime.url" />
-            </v-col>
-            </div>
-          </v-row>
-        </v-container>
-      </div>
+      <SelectDay @update:selectedDay="handleChangeDay" @update:username="handleChangeUsername"
+        @update:showBehindOnly="handleChangeShowBehindOnly" />
+      <v-row class="myRowCustom">
+        <div class="card-container">
+          <v-col v-for="anime in animeList" :key="anime.id">
+            <AnimeCard :title="anime.title" :thumbnail="anime.thumbnail" :progress="anime.progress"
+              :lastAired="anime.lastAired" :url="anime.url" />
+          </v-col>
+        </div>
+      </v-row>
     </v-main>
   </v-app>
 </template>
 
 <script setup>
-// import AnimeSideBar from '@/components/AnimeSideBar.vue'
+
 import AnimeCard from "@/components/AnimeCard.vue";
 import SelectDay from "@/components/SelectDay.vue";
 
@@ -49,9 +43,6 @@ const originalAnimeList = ref([]);
 const username = ref("");
 const showBehindOnly = ref(false);
 const day = ref(0);
-
-const drawer = ref(true);
-const rail = ref(true);
 
 function makeQuery() {
   var query = `
@@ -101,7 +92,9 @@ function makeQuery() {
     username: username.value,
   };
 
-  // Define the config we'll need for our Api request
+  
+  if (username.value != '') {
+    // Define the config we'll need for our Api request
   var url = "https://graphql.anilist.co",
     options = {
       //Authorization: 'Bearer ' + accessToken,
@@ -118,6 +111,10 @@ function makeQuery() {
 
   // Make the HTTP Api request
   fetch(url, options).then(handleResponse).then(handleData).catch(handleError);
+  } else {
+    animeList.value = [];
+    originalAnimeList.value = [];
+  }
 }
 
 function handleResponse(response) {
@@ -241,16 +238,38 @@ function handleError(error) {
 
 <style scoped>
 .card-container {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 15px; /* Establecer el espacio entre las tarjetas */
-    padding: 20px;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 15px;
+  /* Establecer el espacio entre las tarjetas */
+  padding: 20px;
 }
+
 .myRowCustom {
   display: flex;
-  justify-content: center; /* Centra el contenido horizontalmente */
-  align-items: center; /* Centra el contenido verticalmente */
+  justify-content: center;
+  /* Centra el contenido horizontalmente */
+  align-items: center;
+  /* Centra el contenido verticalmente */
+}
+
+.v-navigation-drawer {
+  background-color: #222;
+  /* Cambia el color de fondo a tu preferencia */
+  color: #fff;
+  /* Cambia el color del texto a tu preferencia */
+}
+
+.v-navigation-drawer v-list-item {
+  padding: 12px 24px;
+  /* Ajusta el espacio alrededor de cada elemento de la lista */
+  color: #fff;
+  /* Cambia el color del texto a tu preferencia */
+}
+
+.v-main {
+  background: url('./assets/wallpaper_v1.png') center/cover no-repeat fixed;
 }
 </style>

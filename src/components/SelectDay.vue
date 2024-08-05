@@ -1,29 +1,27 @@
 <template>
     <!-- Input to write the username with a button to search the list for that user -->
     <v-container>
-        <v-row>
-            <v-spacer></v-spacer>
-            <v-col cols="6" md="4">
-                <v-text-field :loading="loadingSearch" density="compact" variant="solo" v-model="username" label="Username"
-                    append-inner-icon="mdi-magnify" single-line hide-details @click:append-inner="searchList"
-                    @keydown.enter.prevent="searchList" required here placeholder="Username"
-                    class="text-field"></v-text-field>
-            </v-col>
-            <v-col cols="6" md="3">
-                <v-switch color="blue" label="Show Behind Only" v-model="showBehindOnly"></v-switch>
+        <v-row justify="center">
+            <v-col cols="12" md="8">
+                <v-container class="inputs-container">
+                    <v-text-field density="compact" v-model="username" @click:append-inner="searchList"
+                        @keydown.enter.prevent="searchList" append-inner-icon="mdi-magnify" label="Username"
+                        variant="outlined" :loading="loadingSearch" class="outlined-text-field"
+                        :rules="[() => !!username || 'This field is required']" required here></v-text-field>
+                    <v-switch class="custom-switch" color="black" label="Show Behind Only" v-model="showBehindOnly"
+                        :disabled="switchState" hide-details></v-switch>
+                </v-container>
             </v-col>
         </v-row>
-        <v-row>
-            <v-col cols="12">
-                <v-card>
-                    <v-tabs v-model="selectedDay" bg-color="deep-purple-darken-4" center-active
-                        next-icon="mdi-arrow-right-bold-box-outline" prev-icon="mdi-arrow-left-bold-box-outline"
-                        show-arrows align-tabs="center">
-                        <v-tab v-for="day in days" :key="day" :value="day.id">
-                            {{ day.name }}
-                        </v-tab>
-                    </v-tabs>
-                </v-card>
+        <v-row justify="center">
+            <v-col cols="12" md="8">
+                <v-tabs v-model="selectedDay" center-active next-icon="mdi-arrow-right-bold-box-outline"
+                    prev-icon="mdi-arrow-left-bold-box-outline" show-arrows align-tabs="center" class="custom-Tabs">
+                    <v-tab v-for="day in days" :key="day" :value="day.id">
+                        <!-- <v-icon class="card-anime-button-icon" icon="mdi-checkbox-marked-circle"></v-icon> -->
+                        {{ day.name }}
+                    </v-tab>
+                </v-tabs>
             </v-col>
         </v-row>
     </v-container>
@@ -50,10 +48,11 @@ const days = ref([
     { id: 8, name: 'All' }
 ])
 
-const username = ref('')
-// const username = ref('Jaime0299')
+// const username = ref('')
+const username = ref('Jaime0299')
 
 const showBehindOnly = ref(false)
+const switchState = ref(true);
 
 watch(selectedDay, (newValue, oldValue) => {
     console.log(newValue);
@@ -65,12 +64,65 @@ watch(showBehindOnly, (newValue, oldValue) => {
 })
 
 function searchList() {
-    loadingSearch.value = true;
-    setTimeout(() => {
-        loadingSearch.value = false;
-        const date = new Date()
-        selectedDay.value = date.getDay()
+
+    if (username.value != '') {
+        loadingSearch.value = true;
+        showBehindOnly.value = false;   
+        setTimeout(() => {
+            loadingSearch.value = false;
+            switchState.value = false;
+            const date = new Date()
+            selectedDay.value = date.getDay()
+            emit('update:username', username.value)
+        }, 3000)     
+    } else {
+        switchState.value = true;
+        showBehindOnly.value = false;
         emit('update:username', username.value)
-    }, 2000)
+    }
+    
 }
 </script>
+
+<style scoped>
+.inputs-container {
+    border-radius: 20px;
+    /* gap: 5px; */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    border-radius: 15px;
+    background: #311B92;
+}
+
+.outlined-text-field {
+    border-radius: 10px;
+    width: 400px;
+    color: white;
+    font-weight: bold;
+}
+
+.custom-switch {
+    color: white;
+}
+
+.custom-Tabs {
+    border-radius: 15px;
+    background-color: #311B92;
+    color: #ffffff;
+}
+
+.custom-Tabs .v-tabs-slider {
+    background-color: #ffffff;
+}
+
+.custom-Tabs .v-tab {
+    color: white;
+    font-weight: bold;
+}
+
+/* .custom-Tabs .v-tab.v-tab--active {
+  background-color: black;
+} */
+</style>
