@@ -75,7 +75,7 @@ function animeCradMark(title) {
 
 .card-anime-data {
     font-size: 1rem;
-    color: #555;
+    color: #b3b3b3;
     margin-bottom: 5px;
 }
 
